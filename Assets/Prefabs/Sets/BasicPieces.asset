@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acb5a43232ccdfc4bbfb3d61abf2af3d, type: 3}
+  m_Name: BasicPieces
+  m_EditorClassIdentifier: 
+  bPond: {fileID: 11400000, guid: 08e039a10857be440a54836fca774e1b, type: 2}
+  bKnight: {fileID: 11400000, guid: 52f0b2717d4013f418e2cd3947eef01c, type: 2}
+  bBishop: {fileID: 11400000, guid: 795d04c02c8ef324485437fd780a7371, type: 2}
+  bRook: {fileID: 11400000, guid: 9c89b04fe023d8e48b23d0760ce3066e, type: 2}
+  bQueen: {fileID: 11400000, guid: 686f313d49da07e4b93e48d1dda4ec39, type: 2}
+  bKing: {fileID: 11400000, guid: e5a67d04e868c0f4eb664bd79e628498, type: 2}
+  wPond: {fileID: 11400000, guid: 45fb40495d7b1074eb800840223bf7ad, type: 2}
+  wKnight: {fileID: 11400000, guid: 5c69677b42da3074e8e4b3987e2999ec, type: 2}
+  wBishop: {fileID: 11400000, guid: 77785707ad3460549b0372528a9eeb36, type: 2}
+  wRook: {fileID: 11400000, guid: c890110a2c6fe5a40b06b216fedbf596, type: 2}
+  wQueen: {fileID: 11400000, guid: 0fe63b9eaf46a65448cfe62bb8cb6dce, type: 2}
+  wKing: {fileID: 11400000, guid: dd04bf82365f42245bd24e95a54baed7, type: 2}
+  bSquare: {fileID: 11400000, guid: 2e1bdb83e27a27a41a4992c9d8e794ef, type: 2}
+  wSquare: {fileID: 11400000, guid: df2a892c5f3be5b4980b1fc133bc65d6, type: 2}

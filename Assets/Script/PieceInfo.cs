@@ -7,6 +7,7 @@ public class PieceInfo : MonoBehaviour
     public string color;
     public string type;
     public bool isActive;
+    public bool moved;
     public int value;
 
     private SpriteRenderer render;
@@ -17,6 +18,7 @@ public class PieceInfo : MonoBehaviour
         color = data.color;
         type = data.type;
         isActive = data.isActive;
+        moved = data.moved;
         value = data.value;
         render.sprite = data.skin;
     }

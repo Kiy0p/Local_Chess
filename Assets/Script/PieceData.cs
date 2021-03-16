@@ -9,6 +9,7 @@ public class PieceData : ScriptableObject
     public string color;
     public string type;
     public bool isActive;
+    public bool moved;
     public int value;
     public Sprite skin;
 }

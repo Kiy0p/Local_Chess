@@ -546,7 +546,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &475289654
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1504,6 +1504,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f02a76aa4bf4e284a8adea796d79778e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pondPrefab: {fileID: 2329421476585659605, guid: e1e5cfa5a60465945a0a9bf577e42933, type: 3}
+  type: {fileID: 11400000, guid: 08e039a10857be440a54836fca774e1b, type: 2}
 --- !u!1 &1996998341
 GameObject:
   m_ObjectHideFlags: 0

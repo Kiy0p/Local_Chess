@@ -4,10 +4,24 @@ using UnityEngine;
 
 public class MovesManager : MonoBehaviour
 {
+    private GameObject realPond;
+    private GameObject pondRef;
+    private Vector3Int pondCoordinates;
+
+    private void Start()
+    {
+        realPond = null;
+        pondRef = null;
+    }
+
     public bool ChooseMove(GameObject[,] board, Vector3Int prevPos, Vector3Int newPos, GameObject piece, bool takes)
     {
         string type = piece.GetComponent<PieceInfo>().type;
         GetCollisions(prevPos, newPos);
+        if (pondRef != null)
+        {
+            DeleteEnPassantPond(board);
+        }
         switch (type)
         {
             case "queen":
@@ -21,13 +35,13 @@ public class MovesManager : MonoBehaviour
             case "knight":
                 return (KnightMove(prevPos, newPos));
             case "pond":
-                return(PondMove(prevPos, newPos, piece, takes));
+                return(PondMove(board, prevPos, newPos, piece, takes));
             default:
                 return (false);
         }
     }
 
-    // Pieces moves Rules
+    ///////////////////////////////// Pieces moves and rulls \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     private bool KingMove(GameObject[,] board, Vector3Int prevPos, Vector3Int newPos, GameObject piece, bool takes)
     {
@@ -89,7 +103,7 @@ public class MovesManager : MonoBehaviour
         return (false);
     }
 
-    private bool PondMove(Vector3Int prevPos, Vector3Int newPos, GameObject piece, bool takes)
+    private bool PondMove(GameObject[,] board, Vector3Int prevPos, Vector3Int newPos, GameObject piece, bool takes)
     {
         if (piece.GetComponent<PieceInfo>().moved == false)
         {
@@ -101,6 +115,7 @@ public class MovesManager : MonoBehaviour
             if (IsVertical(prevPos, newPos) == 2 && takes == false)
             {
                 piece.GetComponent<PieceInfo>().moved = true;
+                CreateEnPassantPond(board, newPos, piece);
                 return (true);
             }
         }
@@ -110,6 +125,10 @@ public class MovesManager : MonoBehaviour
         }
         else if ((IsDiagonalOne(prevPos, newPos) == 1 || IsDiagonalTwo(prevPos, newPos) == 1) && takes == true)
         {
+            if (newPos == pondCoordinates && realPond != null)
+            {
+                TakeEnPassantPond(board);
+            }
             piece.GetComponent<PieceInfo>().moved = true;
             return (true);
         }
@@ -117,7 +136,7 @@ public class MovesManager : MonoBehaviour
     }
 
 
-    // Special Movements
+    ///////////////////////////////// Special Movements \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     private bool Castle(GameObject[,] board, Vector3Int prevPos, Vector3Int newPos, GameObject piece)
     {
@@ -148,16 +167,42 @@ public class MovesManager : MonoBehaviour
         return (false);
     }
 
+    private void CreateEnPassantPond(GameObject[,] board, Vector3Int newPos, GameObject pond)
+    {
+        realPond = pond;
+        pondRef = Instantiate(pond);
+        int operation = 1;
 
+        if (pond.GetComponent<PieceInfo>().color == "black")
+            operation = -1;
 
-    // Calculation Mathods
+        pondCoordinates = new Vector3Int((int)pondRef.transform.position.x, (int)pondRef.transform.position.y + operation, (int)pondRef.transform.position.z);
+        pondRef.transform.position = RealCoordinates(pondCoordinates);
+        board[pondCoordinates.y, pondCoordinates.x] = pondRef;
+    }
 
-    private Vector3 RealCoordinates(Vector3Int coordinates)
+    private void DeleteEnPassantPond(GameObject[,] board)
+    {
+        Destroy(pondRef);
+        board[pondCoordinates.y, pondCoordinates.x] = null;
+        pondRef = null;
+    }
+
+    private void TakeEnPassantPond(GameObject[,] board)
+    {
+        board[(int)realPond.transform.position.y, (int)realPond.transform.position.x] = null;
+        Destroy(realPond);
+        pondRef = null;
+    }
+
+    ///////////////////////////////// Calculation Methods \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    private Vector3 RealCoordinates(Vector3Int coordinates) // Translates board coordinates to world coordinates
     {
         return (new Vector3(coordinates.x + 0.5f, coordinates.y + 0.5f, coordinates.z));
     }
 
-    private int GetCollisions(Vector3Int prevPos, Vector3Int newPos)
+    private int GetCollisions(Vector3Int prevPos, Vector3Int newPos) // Finds if there is a piece between prevPos and newPos
     {
         Vector3 realPrevPos = RealCoordinates(prevPos);
         Vector3 realNewPos = RealCoordinates(newPos);
